@@ -12,6 +12,7 @@
   </thead>
 
   <tbody>
+    <%= current_user.username %>
     <% @wikis.each do |wiki| %>
       <tr>
         <td><%= wiki.title %></td>
