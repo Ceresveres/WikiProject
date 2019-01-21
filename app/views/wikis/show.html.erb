@@ -10,5 +10,15 @@
   <%= @wiki.body %>
 </p>
 
+<p><%= @wiki.user %></p>
+
+<% @wiki.topics.each do |topic| %>
+	<p><%= link_to "#{topic.title}", topic %></p>
+<% end %>
+
+<% @wiki.pages.each do |page| %>
+	<p><%= link_to "#{page.title}", page %></p>
+<% end %>
+
 <%= link_to 'Edit', edit_wiki_path(@wiki) %> |
 <%= link_to 'Back', wikis_path %>

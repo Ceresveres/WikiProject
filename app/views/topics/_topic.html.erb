@@ -1,3 +1,9 @@
 <div>
 	<%= link_to topic.title, topic_path(topic) %>
+	<%= link_to 'Show Wiki', topic.wiki %>
+  <%= topic.title %>
+  <%= topic.wiki %>
+  <%= link_to 'Show', topic %>
+  <%= link_to 'Edit', edit_topic_path(topic) %>
+  <%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' } %>
 </div>
