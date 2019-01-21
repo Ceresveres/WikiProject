@@ -26,3 +26,13 @@ puts "1 user created"
 end
 
 puts "5 wikis created"
+
+5.times do |page|
+	Page.create!(
+		title: "Sample Page #{}",
+		content: 	"This is just a sample text to describe the page",
+		wiki_id: Wiki.first.id
+	)
+end
+
+puts "5 pages created"
