@@ -4,7 +4,7 @@ class WikisController < ApplicationController
   # GET /wikis
   # GET /wikis.json
   def index
-    @wikis = Wiki.all
+    @wikis = Wiki.where(:user_id => current_user.id)
   end
 
   # GET /wikis/1
@@ -25,14 +25,12 @@ class WikisController < ApplicationController
   # POST /wikis.json
   def create
     @wiki = Wiki.new(wiki_params)
-
+    @wiki.user_id = current_user.id if current_user
     respond_to do |format|
       if @wiki.save
         format.html { redirect_to @wiki, notice: 'Wiki was successfully created.' }
-        format.json { render :show, status: :created, location: @wiki }
-      else
+       else
         format.html { render :new }
-        format.json { render json: @wiki.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -43,10 +41,8 @@ class WikisController < ApplicationController
     respond_to do |format|
       if @wiki.update(wiki_params)
         format.html { redirect_to @wiki, notice: 'Wiki was successfully updated.' }
-        format.json { render :show, status: :ok, location: @wiki }
       else
         format.html { render :edit }
-        format.json { render json: @wiki.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -69,6 +65,6 @@ class WikisController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def wiki_params
-      params.require(:wiki).permit(:title, :body)
+      params.require(:wiki).permit(:title, :body, :user_id)
     end
 end
