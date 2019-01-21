@@ -9,7 +9,8 @@
 5.times do |wiki|
 	Wiki.create!(
 		title: 	"Sample wiki #{wiki}",
-		body: 	"This is a few sample text to describe the wiki"
+		body: 	"This is a few sample text to describe the wiki",
+		user_id: User.first.id
 	)
 end
 
