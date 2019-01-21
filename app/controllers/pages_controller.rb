@@ -1,10 +1,10 @@
 class PagesController < ApplicationController
   before_action :set_page, only: [:show, :edit, :update, :destroy]
+  before_action :set_wiki
 
   # GET /pages
   # GET /pages.json
   def index
-    @wiki = Wiki.friendly.find(params[:wiki_id])
     @pages = @wiki.pages
   end
 
@@ -25,11 +25,10 @@ class PagesController < ApplicationController
   # POST /pages
   # POST /pages.json
   def create
-    @page = Page.new(page_params)
-
+    @page = @wiki.pages.build(page_params)
     respond_to do |format|
       if @page.save
-        format.html { redirect_to @page, notice: 'Page was successfully created.' }
+        format.html { redirect_to [@wiki, @page], notice: 'Page was successfully created.' }
         format.json { render :show, status: :created, location: @page }
       else
         format.html { render :new }
@@ -43,7 +42,7 @@ class PagesController < ApplicationController
   def update
     respond_to do |format|
       if @page.update(page_params)
-        format.html { redirect_to @page, notice: 'Page was successfully updated.' }
+        format.html { redirect_to [@wiki, @page], notice: 'Page was successfully updated.' }
         format.json { render :show, status: :ok, location: @page }
       else
         format.html { render :edit }
@@ -57,8 +56,7 @@ class PagesController < ApplicationController
   def destroy
     @page.destroy
     respond_to do |format|
-      format.html { redirect_to pages_url, notice: 'Page was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to wiki_pages_url, notice: 'Page was successfully destroyed.' }
     end
   end
 
@@ -66,6 +64,10 @@ class PagesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_page
       @page = Page.find(params[:id])
+    end
+
+    def set_wiki
+      @wiki = Wiki.friendly.find(params[:wiki_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
