@@ -1,7 +1,6 @@
 <div class="ui large top fixed menu inverted" >
   <div class="ui container">
-    <%= link_to "Home", root_path, class: "item active" %>
-    <%= link_to "Your Wikipedias", wikis_path, class: "item" %>
+    <%= nav_helper 'item', 'a' %>
     <% if current_user %>
       <div class="right menu">
         <div class="item">
